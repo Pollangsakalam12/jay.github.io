@@ -8,94 +8,135 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #fdf6f0, #f8e1e7);
-  text-align: center;
+  background: radial-gradient(circle at center, #fff0f5, #f8e1e7);
   overflow-x: hidden;
+  text-align: center;
 }
 
-/* HERO SECTION */
-.hero {
-  height: 100vh;
+/* INTRO SCREEN */
+#intro {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  animation: fadeIn 2s ease-in;
+  z-index: 10;
+  cursor: pointer;
+}
+
+#intro h1 {
+  font-size: 2em;
+  opacity: 0.8;
+}
+
+/* PARTICLES */
+.particle {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: float 10s infinite linear;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
+}
+
+/* HERO */
+.hero {
+  margin-top: 100px;
+  opacity: 0;
+  transition: 2s;
+}
+
+.hero.show {
+  opacity: 1;
 }
 
 h1 {
   font-size: 3em;
   color: #d4a373;
+  text-shadow: 0 0 20px rgba(212,163,115,0.5);
 }
 
-p.subtitle {
-  font-size: 1.2em;
-  color: #555;
+/* PHOTO */
+.photo img {
+  width: 260px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  margin-top: 20px;
+  transition: 0.5s;
 }
 
-/* SCROLL MESSAGE */
+.photo img:hover {
+  transform: scale(1.05);
+}
+
+/* MESSAGE */
 .message {
   max-width: 700px;
-  margin: 100px auto;
-  font-size: 1.1em;
-  line-height: 1.8;
+  margin: 80px auto;
+  font-size: 1.15em;
+  line-height: 1.9;
   color: #333;
+  white-space: pre-line;
   opacity: 0;
-  transform: translateY(50px);
-  transition: all 1.5s ease;
+  transition: 2s;
 }
 
-/* SHOW EFFECT */
 .message.show {
   opacity: 1;
-  transform: translateY(0);
-}
-
-/* PHOTO FRAME */
-.photo {
-  margin-top: 40px;
-}
-
-.photo img {
-  width: 250px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 /* FOOTER */
 .footer {
-  margin: 100px 0;
-  font-size: 1em;
+  margin: 80px 0;
   color: #888;
-}
-
-/* ANIMATION */
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
 }
 </style>
 </head>
 
 <body>
 
+<!-- 🎬 INTRO -->
+<div id="intro">
+  <h1>Click anywhere… this is for you 💌</h1>
+</div>
+
 <!-- 🎵 MUSIC -->
-<audio autoplay loop>
-  <source src="Chase Atlantic - Paradise (Isolated Instrumental) - (64 Kbps).mp3" type="audio/mpeg">
+<audio id="bgmusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
 </audio>
 
+<!-- ✨ PARTICLES -->
+<script>
+for(let i=0;i<40;i++){
+  let p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(p);
+}
+</script>
+
 <!-- 🎓 HERO -->
-<div class="hero">
+<div class="hero" id="hero">
   <h1>Congratulations, Chie 🎓</h1>
-  <p class="subtitle">Scroll down slowly… this is for you 💌</p>
 </div>
 
 <!-- 📸 PHOTO -->
 <div class="photo">
-  <img src="photo.jpg" alt="Chie">
+  <img src="photo.jpg">
 </div>
 
-<!-- 💌 MESSAGE -->
+<!-- 💌 MESSAGE (UNCHANGED) -->
 <div class="message" id="msg">
 Hi, Chie.
 
@@ -125,24 +166,25 @@ I’ll always be here, silently supporting you, cheering for you, and believing 
 
 Congratulations, Chie. 🎓
 I’m so proud of you. Always.
-
 </div>
 
 <div class="footer">
 Made with heart by Jayjay 💛
 </div>
 
-<!-- ✨ SCROLL ANIMATION SCRIPT -->
+<!-- 🎬 SCRIPT -->
 <script>
-window.addEventListener('scroll', function() {
-  const msg = document.getElementById('msg');
-  const position = msg.getBoundingClientRect().top;
-  const screen = window.innerHeight;
+const intro = document.getElementById("intro");
+const music = document.getElementById("bgmusic");
+const hero = document.getElementById("hero");
+const msg = document.getElementById("msg");
 
-  if(position < screen - 100){
-    msg.classList.add('show');
-  }
-});
+intro.onclick = () => {
+  intro.style.display = "none";
+  music.play();
+  setTimeout(()=>hero.classList.add("show"),500);
+  setTimeout(()=>msg.classList.add("show"),1500);
+};
 </script>
 
 </body>
