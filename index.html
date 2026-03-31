@@ -8,45 +8,24 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at center, #fff0f5, #f8e1e7);
-  overflow-x: hidden;
   text-align: center;
+  background: #000;
+  color: white;
+  overflow-x: hidden;
+  transition: background 2s;
 }
 
-/* INTRO SCREEN */
+/* INTRO */
 #intro {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: #000;
-  color: white;
+  background: black;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  z-index: 10;
   cursor: pointer;
-}
-
-#intro h1 {
-  font-size: 2em;
-  opacity: 0.8;
-}
-
-/* PARTICLES */
-.particle {
-  position: fixed;
-  width: 5px;
-  height: 5px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.6;
-  animation: float 10s infinite linear;
-}
-
-@keyframes float {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-10vh); }
+  z-index: 10;
 }
 
 /* HERO */
@@ -62,128 +41,134 @@ body {
 
 h1 {
   font-size: 3em;
-  color: #d4a373;
-  text-shadow: 0 0 20px rgba(212,163,115,0.5);
+  color: #ffd6e0;
 }
 
 /* PHOTO */
 .photo img {
   width: 260px;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
   margin-top: 20px;
-  transition: 0.5s;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
 }
 
-.photo img:hover {
-  transform: scale(1.05);
-}
-
-/* MESSAGE */
-.message {
+/* TEXT */
+.text {
   max-width: 700px;
   margin: 80px auto;
-  font-size: 1.15em;
+  font-size: 1.2em;
   line-height: 1.9;
-  color: #333;
-  white-space: pre-line;
   opacity: 0;
   transition: 2s;
 }
 
-.message.show {
+.text.show {
   opacity: 1;
 }
 
-/* FOOTER */
-.footer {
-  margin: 80px 0;
-  color: #888;
+/* BUTTON */
+button {
+  margin-top: 30px;
+  padding: 10px 20px;
+  background: #ffd6e0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎬 INTRO -->
+<!-- INTRO -->
 <div id="intro">
-  <h1>Click anywhere… this is for you 💌</h1>
+  <h2>Click… I made this for you 💌</h2>
 </div>
 
-<!-- 🎵 MUSIC -->
-<audio id="bgmusic" loop>
+<!-- MUSIC -->
+<audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- ✨ PARTICLES -->
-<script>
-for(let i=0;i<40;i++){
-  let p=document.createElement("div");
-  p.className="particle";
-  p.style.left=Math.random()*100+"vw";
-  p.style.animationDuration=(5+Math.random()*5)+"s";
-  document.body.appendChild(p);
-}
-</script>
-
-<!-- 🎓 HERO -->
+<!-- HERO -->
 <div class="hero" id="hero">
   <h1>Congratulations, Chie 🎓</h1>
 </div>
 
-<!-- 📸 PHOTO -->
+<!-- PHOTO -->
 <div class="photo">
   <img src="photo.jpg">
 </div>
 
-<!-- 💌 MESSAGE (UNCHANGED) -->
-<div class="message" id="msg">
-Hi, Chie.
+<!-- TEXT -->
+<div class="text" id="text"></div>
+<button id="next" style="display:none;">Continue</button>
+
+<script>
+const intro = document.getElementById("intro");
+const music = document.getElementById("music");
+const hero = document.getElementById("hero");
+const text = document.getElementById("text");
+const nextBtn = document.getElementById("next");
+
+const parts = [
+
+`Hi, Chie.
 
 Gusto ko magsimula sa thank you as gratitude.
-Happy 10 months of friendship, Chie!! Grabe… ang tagal na rin pala, no? Parang ang bilis lang ng panahon, pero at the same time, ang dami na rin nating pinagdaanan kahit sa simple conversation noh.
+Happy 10 months of friendship, Chie!! Grabe… ang tagal na rin pala, no? Parang ang bilis lang ng panahon, pero at the same time, ang dami na rin nating pinagdaanan kahit sa simple conversation noh.`,
 
-Naalala ko pa nung first time tayong nag-chat. Ang tagal mong mag-reply noon 😭 to the point na akala ko bata ka lang, mga 13–15 years old HAHAHA. Hindi ko inexpect na darating yung time na ikaw na ‘to ngayon—graduating, 18 years old, si Kutchie Ebrano Viña. Nakakatuwa lang isipin na from that simple start, naging ganito ka-importante yung presence mo sa buhay ko.
+`Naalala ko pa nung first time tayong nag-chat. Ang tagal mong mag-reply noon 😭 to the point na akala ko bata ka lang, mga 13–15 years old HAHAHA. Hindi ko inexpect na darating yung time na ikaw na ‘to ngayon—graduating, 18 years old, si Kutchie Ebrano Viña. Nakakatuwa lang isipin na from that simple start, naging ganito ka-importante yung presence mo sa buhay ko.`,
 
-Chie, sa totoo lang… ikaw yung isa sa pinaka genuine na taong nakilala ko you are the only friend that I considered. Yung tipong sobrang bait mo, marunong ka mag-appreciate even little things, and ang babaw pa ng kaligayahan mo HAHAH . Ang dali mong pasayahin, pero at the same time, ang lalim din ng pagkatao mo. And honestly… you’re just so naturally beautiful, inside and out. Yung tipong hindi mo kailangan mag-effort para maging special—kasi ikaw na ‘yun eh.
+`Chie, sa totoo lang… ikaw yung isa sa pinaka genuine na taong nakilala ko you are the only friend that I considered. Yung tipong sobrang bait mo, marunong ka mag-appreciate even little things, and ang babaw pa ng kaligayahan mo HAHAH . Ang dali mong pasayahin, pero at the same time, ang lalim din ng pagkatao mo. And honestly… you’re just so naturally beautiful, inside and out. Yung tipong hindi mo kailangan mag-effort para maging special—kasi ikaw na ‘yun eh.`,
 
-Hindi ko rin maitatanggi… habang tumatagal, I found myself slowly falling. Hindi ko naman plan ‘yun, nangyari lang. Kasi you became exactly the kind of person I admire. Pero alam mo naman… may mga bagay na hindi talaga para sa’tin, and maybe this is one of those. Kaya instead of focusing on that, mas pinili kong i-value kung ano meron tayo ngayon—because having you in my life is already something I’m grateful for.
+`Hindi ko rin maitatanggi… habang tumatagal, I found myself slowly falling. Hindi ko naman plan ‘yun, nangyari lang. Kasi you became exactly the kind of person I admire. Pero alam mo naman… may mga bagay na hindi talaga para sa’tin, and maybe this is one of those. Kaya instead of focusing on that, mas pinili kong i-value kung ano meron tayo ngayon—because having you in my life is already something I’m grateful for.`,
 
-And now, look at you… graduating. I’m really, really proud of you, Chie. Hindi lang dahil natapos mo yung isang chapter ng buhay mo, pero dahil kinaya mo lahat ng challenges na dinaanan mo. You deserve this moment. Lahat ng pagod, puyat, hirap—worth it lahat ‘yan. This is your victory, and I hope you truly feel how special this moment is.
+`And now, look at you… graduating. I’m really, really proud of you, Chie. Hindi lang dahil natapos mo yung isang chapter ng buhay mo, pero dahil kinaya mo lahat ng challenges na dinaanan mo. You deserve this moment. Lahat ng pagod, puyat, hirap—worth it lahat ‘yan. This is your victory, and I hope you truly feel how special this moment is.`,
 
-Chie, gusto ko lang ipaalala sa’yo… I’m always here. Kahit hindi ako active minsan, kahit may sarili akong pinagdadaanan, kahit busy ako—gagawa at gagawa ako ng oras para sa’yo. If dumating yung time na feeling mo wala kang malapitan, nandito lang ako. You can talk to me, vent out, sabihin mo lahat. Gagawin nating magaan ‘yan, okay?
+`Chie, gusto ko lang ipaalala sa’yo… I’m always here. I may not that active, I may not okay in the moment, or I may busy, gagawa at gagawa ako ng oras para sa’yo. If dumating yung time na feeling mo wala kang malapitan, nandito lang ako. You can talk to me, vent out, sabihin mo lahat. Gagawin nating magaan ‘yan, okay?`,
 
-I’ll be your second comfort zone kapag mabigat na lahat. Kapag parang ang gulo na ng mundo, I’ll try to be your peace. Kapag parang ang dilim na, I’ll be there to remind you na may liwanag pa rin. I’ll remind you na everything happens for a reason—even if hindi mo pa siya naiintindihan ngayon. One day, everything will make sense.
+`I’ll be your second comfort zone kapag mabigat na lahat. Kapag parang ang gulo na ng mundo, I’ll try to be your peace. Kapag parang ang dilim na, I’ll be there to remind you na may liwanag pa rin. I’ll remind you na everything happens for a reason, even if hindi mo pa siya naiintindihan ngayon. One day, everything will make sense.`,
 
-Alam mo, every pain, every struggle… hindi lang siya basta paghihirap. It’s growth. It’s you becoming stronger, wiser, and better. And I believe in you, Chie. I always have.
+`Alam mo, every pain, every struggle… hindi lang siya basta paghihirap. It’s growth. It’s you becoming stronger, wiser, and better. And I believe in you, Chie. I always have.`,
 
-As you step into a bigger world, mas marami ka pang makikilala—iba’t ibang tao, iba’t ibang ugali. May mga magiging mabuti, may mga hindi. Kaya please… choose your circle wisely. Kasi kung sino yung mga taong nakapaligid sa’yo, sila rin yung makaka-influence kung sino ka magiging. You deserve people who will lift you up, not bring you down.
+`As you step into a bigger world, mas marami ka pang makikilala—iba’t ibang tao, iba’t ibang ugali. May mga magiging mabuti, may mga hindi. Kaya please… choose your circle wisely. Kasi kung sino yung mga taong nakapaligid sa’yo, sila rin yung makaka-influence kung sino ka magiging. You deserve people who will lift you up, not bring you down.`,
 
-This is your next level in life. New environment, new experiences, new challenges. But don’t forget to enjoy everything, okay? Hindi lahat kailangang seryosohin. Take your time, live your moments, and don’t be too hard on yourself.
+`This is your next level in life. New environment, new experiences, new challenges. But don’t forget to enjoy everything, okay? Hindi lahat kailangang seryosohin. Take your time, live your moments, and don’t be too hard on yourself.`,
 
-And no matter what happens…
+`And no matter what happens…
 I’ll always be here, silently supporting you, cheering for you, and believing in you.
 
 Congratulations, Chie. 🎓
-I’m so proud of you. Always.
-</div>
+I’m so proud of you. Always.`
 
-<div class="footer">
-Made with heart by Jayjay 💛
-</div>
+];
 
-<!-- 🎬 SCRIPT -->
-<script>
-const intro = document.getElementById("intro");
-const music = document.getElementById("bgmusic");
-const hero = document.getElementById("hero");
-const msg = document.getElementById("msg");
+let index = 0;
+
+function showText() {
+  text.classList.remove("show");
+  setTimeout(() => {
+    text.innerText = parts[index];
+    text.classList.add("show");
+  }, 300);
+}
+
+nextBtn.onclick = () => {
+  index++;
+  if(index < parts.length){
+    showText();
+  } else {
+    nextBtn.style.display = "none";
+  }
+};
 
 intro.onclick = () => {
   intro.style.display = "none";
   music.play();
-  setTimeout(()=>hero.classList.add("show"),500);
-  setTimeout(()=>msg.classList.add("show"),1500);
+  hero.classList.add("show");
+  showText();
+  nextBtn.style.display = "inline-block";
 };
 </script>
 
